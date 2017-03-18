@@ -1,21 +1,23 @@
 package instrumentation;
 
 import org.junit.jupiter.api.*;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by Yohanna on 2017-03-17.
  */
 class MainTest {
-    @BeforeAll
+    @BeforeEach
     void setUp() {
-        Instrumentation instrumentation;
+        // Re-populate the array
     }
 
     @Test
-    void main() {
-
+    void testBubbleSort() {
     }
 
+    @Test
+    void testQuickSort(){
+
+    }
 }
