@@ -45,18 +45,17 @@ public class Instrumentation {
 
 //        TABS.concat("| ");
 
-        long startTime = nanoTime();
-        System.out.format("startTime = %d in Start\n", startTime);
+        startTime = nanoTime();
+//        System.out.format("startTime = %d in Start\n", startTime);
     }
 
     public void stopTiming(String comment) {
 
-        System.out.format("startTime = %d in Stop\n", startTime);
+//        System.out.format("startTime = %d in Stop\n", startTime);
 
         long stopTime = nanoTime();
 
-        System.out.format("startTime = %d in Stop\n", startTime);
-        System.out.format("stopTime = %d in Stop\n", stopTime);
+//        System.out.format("stopTime = %d in Stop\n", stopTime);
         long estimatedTime = stopTime - startTime;
 
         estimatedTime = TimeUnit.NANOSECONDS.toMillis(estimatedTime);

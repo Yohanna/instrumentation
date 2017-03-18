@@ -10,9 +10,9 @@ public class Main {
         try {
             inst.startTiming("main");
             long j = 0;
-//            for (int i = 0; i < 100; i++) {
-//                j += i;
-//            }
+            for (int i = 0; i < 1000000; i++) {
+                j += i;
+            }
             System.out.println("j = " + j);
 
             inst.stopTiming("main");
