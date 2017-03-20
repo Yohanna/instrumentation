@@ -95,6 +95,8 @@ public class Instrumentation {
             System.err.println(e.getStackTrace());
         }
 
+        // Reset the instrumentation state to default values
+        resetState();
 
 //        for (String item : log) {
 //            System.out.println(item);
@@ -102,7 +104,15 @@ public class Instrumentation {
     }
 
     public void activate(boolean onoff) {
-        if (onoff) ACTIVE = true;
+        ACTIVE = onoff;
+    }
+
+    private void resetState() {
+        TABS = "";
+        startTimesStack = new Stack();
+        totalTime = 0;
+        log = new ArrayList();
+        ACTIVE = false;
     }
 
     // Remove last 2 chars
