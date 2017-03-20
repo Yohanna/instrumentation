@@ -17,11 +17,9 @@ class ActivationException extends Exception {
 
 public class Instrumentation {
 
-    private String TABS;
-    private Stack titles = new Stack();
-    private static long startTime;
-    private long stopTime;
-    private long totalTime = 0;
+    private String TABS = "";
+    private Stack startTimesStack = new Stack();
+    private double totalTime = 0;
     private ArrayList<String> log = new ArrayList();
     private static boolean ACTIVE = false;
 
@@ -39,31 +37,23 @@ public class Instrumentation {
             throw new ActivationException("Instrumentation is not active");
         }
 
-        titles.add(comment);
+        log.add(TABS + "STARTTIMING: " + comment);
+        TABS = TABS.concat("| ");
 
-        log.add("STARTTIMING: " + comment);
-
-//        TABS.concat("| ");
-
-        startTime = nanoTime();
-//        System.out.format("startTime = %d in Start\n", startTime);
+        startTimesStack.push(nanoTime());
     }
 
     public void stopTiming(String comment) {
 
-//        System.out.format("startTime = %d in Stop\n", startTime);
+        long estimatedTime = nanoTime() - (Long) startTimesStack.pop();
 
-        long stopTime = nanoTime();
-
-//        System.out.format("stopTime = %d in Stop\n", stopTime);
-        long estimatedTime = stopTime - startTime;
+        totalTime += estimatedTime;
 
         estimatedTime = TimeUnit.NANOSECONDS.toMillis(estimatedTime);
 
-        log.add("STOPTIMING: " + comment + " " + Long.toString(estimatedTime) + "ms");
-//        log.add(TABS + "STOPTIMING: " + comment);
         TABS = removeIndentation(TABS);
 
+        log.add(TABS + "STOPTIMING: " + comment + " " + Long.toString(estimatedTime) + "ms");
     }
 
     public void comment(String comment) {
@@ -71,15 +61,14 @@ public class Instrumentation {
     }
 
     public void dump(String filename) {
-        // TODO write to a file
 
-        // Print the log for now
+//        System.out.format("TOTAL TIME: %fms",  TimeUnit.NANOSECONDS.toMillis((long)totalTime));
+        log.add("TOTAL TIME: " + totalTime + "ns");
+
+        // TODO write to a file
         for (String item : log) {
             System.out.println(item);
         }
-//        System.out.println(Arrays.toString(log.toArray()));
-
-        System.out.format("TOTAL TIME: %sms", Long.toString(totalTime));
     }
 
     public void activate(boolean onoff) {
