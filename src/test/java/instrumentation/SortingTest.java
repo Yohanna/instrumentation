@@ -1,7 +1,6 @@
 package instrumentation;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -12,46 +11,61 @@ import java.util.Random;
  */
 class SortingTest {
 
-    private int[] arrTest = new int[10];
+    private static int[] bubbleSortArr = new int[10000];
+    private static int[] quickSortArr;
 
-    @BeforeEach
-    void populateArray() {
+    static Instrumentation inst = Instrumentation.getInstance();
+
+    @BeforeAll
+    static void populateArray() {
+        inst.activate(true);
+        inst.startTiming("populateArray");
+
         Random rand = new Random();
-        for (int i = 0; i < arrTest.length; i++) {
-            arrTest[i] = rand.nextInt(99999) + 1;
+        for (int i = 0; i < bubbleSortArr.length; i++) {
+            bubbleSortArr[i] = rand.nextInt(99999) + 1;
         }
+
+        inst.stopTiming("populateArray");
+        inst.dump("populateArray.log");
+
+        // Save the sorted array so it can be used by the QuickSort method
+        quickSortArr = Arrays.copyOf(bubbleSortArr, bubbleSortArr.length);
     }
 
     @Test
     void testBubbleSort() {
-        int[] temp = arrTest;
+        inst.activate(true);
+        inst.startTiming("BubbleSort");
 
-        BubbleSort2Algorithm sort = new BubbleSort2Algorithm();
+        BubbleSort2Algorithm bubbleSort = new BubbleSort2Algorithm();
 
         try {
-            sort.sort(temp);
+            bubbleSort.sort(bubbleSortArr);
         } catch (Exception e) {
             System.err.println(e.getStackTrace());
         }
 
-        Arrays.sort(arrTest);
-        Assertions.assertArrayEquals(arrTest, temp);
+        inst.stopTiming("BubbleSort");
+        inst.dump("BubbleSort.log");
     }
 
     @Test
     void testQuickSort() {
-        int[] temp = arrTest;
+        inst.activate(true);
+        inst.startTiming("QuickSort");
 
         QSortAlgorithm quickSort = new QSortAlgorithm();
 
         try {
-            quickSort.sort(arrTest);
+            // Use the same sorted array for fair comparison
+            quickSort.sort(quickSortArr);
         } catch (Exception e) {
             System.err.println(e.getStackTrace());
         }
 
-        Arrays.sort(arrTest);
-        Assertions.assertArrayEquals(arrTest, temp);
+        inst.stopTiming("QuickSort");
+        inst.dump("QuickSort.log");
 
     }
 }
