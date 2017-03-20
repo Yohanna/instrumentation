@@ -1,5 +1,12 @@
 package instrumentation;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Stack;
 import java.util.concurrent.TimeUnit;
@@ -65,7 +72,23 @@ public class Instrumentation {
     }
 
     public void dump(String filename) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss"); // instrumentationddyyMMhhmmss
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
+        Path out = null;
+
+        try {
+            if (filename == null || filename.isEmpty()) {
+                out = Paths.get("instrumentation." + sdf.format(timestamp));
+            } else {
+                out = Paths.get(filename);
+            }
+
+            Files.write(out, log, Charset.defaultCharset());
+
+        } catch (IOException e) {
+            System.err.println(e.getStackTrace());
+        }
 
         //TODO remove this
         for (String item : log) {
