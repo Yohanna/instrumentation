@@ -47,7 +47,11 @@ public class Instrumentation {
 
         long estimatedTime = nanoTime() - (Long) startTimesStack.pop();
 
-        totalTime += estimatedTime;
+        if (startTimesStack.empty()) {
+            totalTime = estimatedTime;
+//        System.out.format("TOTAL TIME: %fms",  TimeUnit.NANOSECONDS.toMillis((long)totalTime));
+            log.add("TOTAL TIME: " + totalTime + "ns");
+        }
 
         estimatedTime = TimeUnit.NANOSECONDS.toMillis(estimatedTime);
 
@@ -62,10 +66,8 @@ public class Instrumentation {
 
     public void dump(String filename) {
 
-//        System.out.format("TOTAL TIME: %fms",  TimeUnit.NANOSECONDS.toMillis((long)totalTime));
-        log.add("TOTAL TIME: " + totalTime + "ns");
 
-        // TODO write to a file
+        //TODO remove this
         for (String item : log) {
             System.out.println(item);
         }
