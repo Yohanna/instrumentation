@@ -62,7 +62,7 @@ public class Instrumentation {
 
         log.add("STOPTIMING: " + comment + " " + Long.toString(estimatedTime) + "ms");
 //        log.add(TABS + "STOPTIMING: " + comment);
-        removeChar(TABS);
+        TABS = removeIndentation(TABS);
 
     }
 
@@ -87,8 +87,8 @@ public class Instrumentation {
     }
 
     // Remove last 2 chars
-    private static String removeChar(String str) {
-        if (str != null && str.length() > 1 && str.charAt(str.length() - 1) == 'x') {
+    private static String removeIndentation(String str) {
+        if (str != null && str.length() >= 2) {
             str = str.substring(0, str.length() - 2);
         }
         return str;
