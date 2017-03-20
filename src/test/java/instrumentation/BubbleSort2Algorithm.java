@@ -1,4 +1,4 @@
-package sort;
+package instrumentation;
 
 /*
  * @(#)BubbleSortAlgorithm.java	1.6 95/01/31 James Gosling
