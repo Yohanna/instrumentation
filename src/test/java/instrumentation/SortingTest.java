@@ -1,10 +1,11 @@
 package instrumentation;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Random;
 import java.util.Arrays;
+import java.util.Random;
 
 /**
  * Created by Yohanna on 2017-03-17.
@@ -19,26 +20,28 @@ class SortingTest {
         for (int i = 0; i < arrTest.length; i++) {
             arrTest[i] = rand.nextInt(99999) + 1;
         }
-
-        System.out.println("Arr before: " + Arrays.toString(arrTest));
     }
 
     @Test
     void testBubbleSort() {
+        int[] temp = arrTest;
+
         BubbleSort2Algorithm sort = new BubbleSort2Algorithm();
 
         try {
-            sort.sort(arrTest);
+            sort.sort(temp);
         } catch (Exception e) {
             System.err.println(e.getStackTrace());
         }
 
-
-        System.out.println("Arr after: " + Arrays.toString(arrTest));
+        Arrays.sort(arrTest);
+        Assertions.assertArrayEquals(arrTest, temp);
     }
 
     @Test
     void testQuickSort() {
+        int[] temp = arrTest;
+
         QSortAlgorithm quickSort = new QSortAlgorithm();
 
         try {
@@ -46,5 +49,9 @@ class SortingTest {
         } catch (Exception e) {
             System.err.println(e.getStackTrace());
         }
+
+        Arrays.sort(arrTest);
+        Assertions.assertArrayEquals(arrTest, temp);
+
     }
 }
