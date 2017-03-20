@@ -54,11 +54,11 @@ public class Instrumentation {
 
         long estimatedTime = nanoTime() - (Long) startTimesStack.pop();
 
+        estimatedTime = TimeUnit.NANOSECONDS.toMillis(estimatedTime);
+
         if (startTimesStack.empty()) {
             totalTime = estimatedTime;
         }
-
-        estimatedTime = TimeUnit.NANOSECONDS.toMillis(estimatedTime);
 
         TABS = removeIndentation(TABS);
 
@@ -71,7 +71,7 @@ public class Instrumentation {
 
     public void dump(String filename) {
 //        System.out.format("TOTAL TIME: %fms",  TimeUnit.NANOSECONDS.toMillis((long)totalTime));
-        log.add("TOTAL TIME: " + totalTime + "ns");
+        log.add("TOTAL TIME: " + totalTime + "ms");
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss"); // instrumentationddyyMMhhmmss
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
