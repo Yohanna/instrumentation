@@ -16,11 +16,6 @@ import static java.lang.System.nanoTime;
 /**
  * Created by Yohanna on 2017-03-16.
  */
-class ActivationException extends Exception {
-    public ActivationException(String msg) {
-        super(msg);
-    }
-}
 
 public class Instrumentation {
 
@@ -100,10 +95,10 @@ public class Instrumentation {
             System.err.println(e.getStackTrace());
         }
 
-        //TODO remove this
-        for (String item : log) {
-            System.out.println(item);
-        }
+
+//        for (String item : log) {
+//            System.out.println(item);
+//        }
     }
 
     public void activate(boolean onoff) {
