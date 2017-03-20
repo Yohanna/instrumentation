@@ -79,7 +79,7 @@ public class Instrumentation {
 
         try {
             if (filename == null || filename.isEmpty()) {
-                out = Paths.get("instrumentation." + sdf.format(timestamp));
+                out = Paths.get("instrumentation." + sdf.format(timestamp) + ".log");
             } else {
                 out = Paths.get(filename);
             }
