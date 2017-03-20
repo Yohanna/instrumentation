@@ -68,7 +68,7 @@ public class Instrumentation {
     }
 
     public void comment(String comment) {
-        log.add("COMMENT: " + comment);
+        log.add(TABS + "COMMENT: " + comment);
     }
 
     public void dump(String filename) {
