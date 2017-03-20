@@ -39,9 +39,9 @@ public class Instrumentation {
     private Instrumentation() {
     }
 
-    public void startTiming(String comment) throws ActivationException {
+    public void startTiming(String comment) {
         if (!ACTIVE) {
-            throw new ActivationException("Instrumentation is not active");
+            return;
         }
 
         log.add(TABS + "STARTTIMING: " + comment);
@@ -51,6 +51,9 @@ public class Instrumentation {
     }
 
     public void stopTiming(String comment) {
+        if (!ACTIVE) {
+            return;
+        }
 
         long estimatedTime = nanoTime() - (Long) startTimesStack.pop();
 
@@ -66,10 +69,16 @@ public class Instrumentation {
     }
 
     public void comment(String comment) {
+        if (!ACTIVE) {
+            return;
+        }
         log.add(TABS + "COMMENT: " + comment);
     }
 
     public void dump(String filename) {
+        if (!ACTIVE) {
+            return;
+        }
 //        System.out.format("TOTAL TIME: %fms",  TimeUnit.NANOSECONDS.toMillis((long)totalTime));
         log.add("TOTAL TIME: " + totalTime + "ms");
 
