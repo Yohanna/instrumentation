@@ -34,6 +34,10 @@ public class Instrumentation {
     private Instrumentation() {
     }
 
+    /**
+     * Starts the timer and logs a comment
+     * @param comment Comment to log
+     */
     public void startTiming(String comment) {
         if (!ACTIVE) {
             return;
@@ -45,6 +49,10 @@ public class Instrumentation {
         startTimesStack.push(nanoTime());
     }
 
+    /**
+     * Stops the timer and logs a comment
+     * @param comment Comment to log
+     */
     public void stopTiming(String comment) {
         if (!ACTIVE) {
             return;
@@ -63,6 +71,10 @@ public class Instrumentation {
         log.add(TABS + "STOPTIMING: " + comment + " " + Long.toString(estimatedTime) + "ms");
     }
 
+    /**
+     * Adds a comment to the log
+     * @param comment Comment to log
+     */
     public void comment(String comment) {
         if (!ACTIVE) {
             return;
@@ -70,6 +82,10 @@ public class Instrumentation {
         log.add(TABS + "COMMENT: " + comment);
     }
 
+    /**
+     * Dumps the log to a file
+     * @param filename where to write the file
+     */
     public void dump(String filename) {
         if (!ACTIVE) {
             return;
@@ -97,12 +113,12 @@ public class Instrumentation {
 
         // Reset the instrumentation state to default values
         resetState();
-
-//        for (String item : log) {
-//            System.out.println(item);
-//        }
     }
 
+    /**
+     * Activates or deactivates the logger
+     * @param onoff Value to control the timer, True for activating, False for deactivating
+     */
     public void activate(boolean onoff) {
         ACTIVE = onoff;
     }
@@ -115,7 +131,11 @@ public class Instrumentation {
         ACTIVE = false;
     }
 
-    // Remove last 2 chars
+    /**
+     * Remove last 2 chars from a string
+     * @param str String to remove the last 2 chars from
+     * @return
+     */
     private static String removeIndentation(String str) {
         if (str != null && str.length() >= 2) {
             str = str.substring(0, str.length() - 2);
